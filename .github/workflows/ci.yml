@@ -14,11 +14,22 @@ jobs:
         with:
           node-version: 12.x
       # キャッシュが入っているパスを取得(次のstepのpathとして利用)
+      # OSによってキャッシュパスが異なるのでコマンドでOS間の差異をなくす
       - name: Get NPM cache directory
         id: npm-cache
         run: |
           echo "::set-output name=dir::$(npm config get cache)"
       # キャッシュを取得
+      #   key に指定したキーに完全一致するキャッシュが存在するときは、path で指定したファイルパスに復元される
+      #   key で指定したキーでキャッシュが存在しない場合は、restore-keys で指定したキーに前方一致するキーを持つキャッシュが復元される
+      # キャッシュの保存
+      #   actions/cache アクションを実行すると、ジョブの最後に指定したキーで指定したファイルパスの内容がキャッシュとして保存される
+      #   すでに同じキーでキャッシュが存在するときは保存されず、キャッシュの上書きは行われません
+      # Tips(keyコンテキストについて)
+      #   ${{ runner.os }} は複数のOSでマトリクスビルドすることを想定
+      #   ${{ hashFiles(’**/package-lock.json’) }}
+      #     - npmの依存関係に変更があったときは新たにキャッシュが作成される
+      #     - '**/package-lock.json' は今回は関係ないが、全ディレクトリの package-lock.jsonを走査することになる
       - name: Cache NPM
         uses: actions/cache@v2
         with:
