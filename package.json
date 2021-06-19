@@ -4,7 +4,7 @@
   "description": "Reference: https://booth.pm/ja/items/1865906",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "nyc --reporter=html --reporter=text mocha",
     "lint": "eslint ."
   },
   "repository": {
@@ -22,6 +22,7 @@
     "@cybozu/eslint-config": "^14.0.1",
     "eslint": "^7.29.0",
     "mocha": "^9.0.1",
+    "nyc": "^15.1.0",
     "prettier": "^2.3.1"
   }
 }
