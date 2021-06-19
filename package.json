@@ -1,0 +1,23 @@
+{
+  "name": "github-actions-practice",
+  "version": "1.0.0",
+  "description": "Reference: https://booth.pm/ja/items/1865906",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koolii/github-actions-practice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koolii/github-actions-practice/issues"
+  },
+  "homepage": "https://github.com/koolii/github-actions-practice#readme",
+  "devDependencies": {
+    "mocha": "^9.0.1"
+  }
+}
