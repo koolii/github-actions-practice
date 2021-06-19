@@ -1,0 +1,10 @@
+name: Run own Github Action named hello
+on: push
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    name: Hello
+    steps:
+      - name: Hello koolii's first Github Actions
+        uses: koolii/github-actions-hello@v1.0.0
