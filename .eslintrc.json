@@ -1,0 +1,9 @@
+{
+  "extends": ["@cybozu/eslint-config/presets/node-prettier"],
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    "prettier/prettier": "off"
+  }
+}

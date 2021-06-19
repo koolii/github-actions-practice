@@ -4,7 +4,8 @@
   "description": "Reference: https://booth.pm/ja/items/1865906",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,9 @@
   },
   "homepage": "https://github.com/koolii/github-actions-practice#readme",
   "devDependencies": {
-    "mocha": "^9.0.1"
+    "@cybozu/eslint-config": "^14.0.1",
+    "eslint": "^7.29.0",
+    "mocha": "^9.0.1",
+    "prettier": "^2.3.1"
   }
 }
