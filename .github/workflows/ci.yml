@@ -41,6 +41,13 @@ jobs:
         run: npm ci
       - name: Test
         run: npm test
+      - name: Upload test coverage
+        uses: actions/upload-artifact@v2
+        with:
+          # 今回はマトリックスビルドを利用していない
+          # name: test-coverage-${{ matrix.os }}-${{ matrix.node }}
+          name: test-coverage-${{ runner.os }}-12
+          path: coverage
   lint:
     name: Lint
     runs-on: ubuntu-latest
