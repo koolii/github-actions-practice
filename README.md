@@ -1,4 +1,7 @@
+
+[![Continuous Integration](https://github.com/koolii/github-actions-practice/actions/workflows/ci.yml/badge.svg)](https://github.com/koolii/github-actions-practice/actions/workflows/ci.yml)
 # github-actions-practice
+
 
 Reference: https://booth.pm/ja/items/1865906
 
@@ -64,3 +67,79 @@ ref: https://github.com/actions/cache/blob/master/examples.md
 
 アーティファクトは、ワークフローの一回の実行内でファイルを複数のジョブ間で受け渡したり、
 ワークフロー完了後に利用するファイルを保存するために使用する
+
+## pull_requestイベントの注意
+
+次のアクティビティ以外だと typesを追記し、反応するアクティビティを追加する
+
+```yml
+# e.g.
+on:
+  pull_request:
+    types: [labeled, unlabeled]
+```
+
+- opened: PR作成時
+- synchronize: 既存PRがpush更新時
+- reopened: リオープン時
+
+## GITHUB_SHA
+
+- push時: pushされたコミットのSHA
+- issue_comment: デフォルトブランチの最新コミット
+...
+
+## respository_dispatch イベント
+
+外部からGithubActions(ワークフロー)を実行させる時のイベント
+
+## ログ(echo等)でコマンド実行
+
+ワークフロー内部で文字列を出力することでコマンドを実行出来る
+
+### 種類
+
+- `set-env`: 環境変数の設定
+- `set-output`: アウトプットの設定
+- `add-path`: PATH の追加
+- `debug|warning|error`: メッセージの出力
+  - デバッグメッセージは `ACTIONS_STEP_DEBUG` をtrueに設定しないと表示されない
+- `add-mask`: ログのマスク (※秘密情報で扱うべき)
+- `stop-commands`: コマンド実行の停止・再開
+
+### フォーマット
+
+```bash
+$ echo "::<COMMAND> <PARAM1>=<VALUE1>,<PARAM2>=<VALUE2>::<COMMAND VALUE>"
+# TZ環境変数に Asia/Tokyo の値を設定
+$ echo "::set-env name=TZ::Asia/Tokyo"
+# steps.<step_id>.outputs.result に true を設定
+$ echo "::set-output name=result::true"
+# PATHの先頭に追加される、add-pathを実行したstepでは反映されていない
+$ echo "::add-path:${{ github.workspace }}"
+# メッセージ出力
+$ echo "::debug::Debug Message"
+$ echo "::warning::Warning Message"
+# プルリクエストのファイル差分上に警告メッセージを表示
+$ echo "::warning file=README.md,line=1,col=1::Warning Message"
+# 特定の文字列(password)をマスクしてログに出ないようにする
+$ echo "::add-mask::password"
+# このコマンド実行後はコマンドが処理されなくなる
+$ echo "::stop-commands:stop"
+# 処理されなくなっていたものを再度有効化
+$ echo "::stop::"
+```
+
+## セルフホストランナー
+
+飛ばす。
+自分で用意したVM上等でワークフローを実行させる
+
+## REST API
+
+ref: https://developer.github.com/v3/actions/
+
+- アーティファクトの情報取得、ダウンロード、削除
+- 秘密情報の設定、削除
+- セルフホストランナーのステータスの取得
+- ワークフローの実行情報の取得、再実行、キャンセル
