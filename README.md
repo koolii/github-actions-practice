@@ -111,6 +111,7 @@ on:
 
 ```bash
 $ echo "::<COMMAND> <PARAM1>=<VALUE1>,<PARAM2>=<VALUE2>::<COMMAND VALUE>"
+
 # TZ環境変数に Asia/Tokyo の値を設定
 $ echo "::set-env name=TZ::Asia/Tokyo"
 # steps.<step_id>.outputs.result に true を設定
@@ -143,3 +144,28 @@ ref: https://developer.github.com/v3/actions/
 - 秘密情報の設定、削除
 - セルフホストランナーのステータスの取得
 - ワークフローの実行情報の取得、再実行、キャンセル
+
+# アクション
+
+JavaScript/Dockerと種別がある
+※ JavaScriptのほうが直接実行できる関係で速いが、Dockerはコンテナとして同一の環境を構築可能
+## アクションの保存場所
+
+public: 別repoとして作成する
+private: `.github/actions/action-a` などのようにリポジトリ内でディレクトリを掘って管理することを推奨
+
+## アクションの利用(バージョン指定)
+
+外部公開されているpublicなアクションは `uses:` を使って定義する
+
+`actions/setup-node@v1.4.0`
+
+バージョンは、commit SHA/タグ/ブランチから設定可能
+
+# サンプル(ユースケース)
+
+- slackに通知: `rtCamp/action-slack-notify`
+- ssh接続: `mxschmitt/action-tmate`
+- DockerイメージをGithub Packages公開: `docker/build-push-action`
+- reviewdogでLint結果をWEB内に表示: `reviewdog/action-eslint`
+- TerraformでAWSにデプロイ: `hashicorp/terraform-github-actions`
